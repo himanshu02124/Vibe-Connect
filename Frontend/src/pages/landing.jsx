@@ -36,7 +36,7 @@ export default function LandingPage() {
 
                     <p>Cover a distance by Vibe Connect Video Call</p>
                     <div role='button'>
-                        <Link to={"/authtication"}>Get Started</Link>
+                        <Link to={"/authenication"}>Get Started</Link>
                     </div>
                 </div>
                 <div>

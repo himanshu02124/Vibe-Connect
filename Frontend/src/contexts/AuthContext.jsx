@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
   const router = useNavigate();
 
  const client = axios.create({
-  baseURL: import.meta.env.VITE_SERVER_URL + "/api/v1/users",
+  baseURL: import.meta.env.VITE_SERVER_URL ,
   withCredentials: true,
 });
   const handleRegister = async (name, username, password) => {

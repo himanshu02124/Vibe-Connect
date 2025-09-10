@@ -10,14 +10,12 @@ const app = express();
 const server = createServer(app);
 const io = connectToSocket(server);
 
+
 // ✅ Correct PORT handling
 const PORT = process.env.PORT || 8000;
 
 // ✅ CORS configuration
-const allowedOrigins = [
-  "http://localhost:5173",                  // Local dev frontend
-  "https://vibe-connect-frontend.onrender.com", // Production frontend
-];
+const allowedOrigins = [process.env.CLIENT_URL, "http://localhost:5173"];
 
 app.use(
   cors({
