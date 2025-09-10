@@ -3,10 +3,6 @@ import httpStatus from "http-status";
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const API_BASE = import.meta.env.VITE_SERVER_URL;
-
-const server_url = import.meta.env.VITE_SERVER_URL;
-
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
@@ -14,69 +10,62 @@ export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(authContext);
   const router = useNavigate();
 
-  // ✅ define axios client
+  // ✅ axios client (baseURL already includes /api/v1/users in .env)
   const client = axios.create({
-  baseURL: import.meta.env.VITE_SERVER_URL,
-});
-
+    baseURL: import.meta.env.VITE_SERVER_URL, // e.g. https://vibeconnectbackend-oxza.onrender.com/api/v1/users
+  });
 
   const handleRegister = async (name, username, password) => {
     try {
-      let request = await client.post("/register", {
-        name,
-        username,
-        password,
-      });
+      let request = await client.post("/register", { name, username, password });
 
       if (request.status === httpStatus.CREATED) {
         return request.data.message;
       }
     } catch (err) {
+      console.error("Register failed:", err.response?.data || err.message);
       throw err;
     }
   };
 
   const handleLogin = async (username, password) => {
     try {
-      let request = await client.post("/login", {
-        username,
-        password,
-      });
+      let request = await client.post("/login", { username, password });
 
-      console.log(username, password);
-      console.log(request.data);
+      console.log("Login response:", request.data);
 
       if (request.status === httpStatus.OK) {
         localStorage.setItem("token", request.data.token);
         router("/home");
       }
     } catch (err) {
+      console.error("Login failed:", err.response?.data || err.message);
       throw err;
     }
   };
 
   const getHistoryOfUser = async () => {
     try {
-      let request = await client.get("/api/v1/users/get_all_activity", {
-        params: {
-          token: localStorage.getItem("token"),
-        },
+      let request = await client.get("/get_all_activity", {
+        params: { token: localStorage.getItem("token") },
       });
       return request.data;
     } catch (err) {
+      console.error("Fetch history failed:", err.response?.data || err.message);
       throw err;
     }
   };
 
   const addToUserHistory = async (meetingCode) => {
     try {
-      let request = await client.post("/api/v1/users/add_to_activity", {
+      let request = await client.post("/add_to_activity", {
         token: localStorage.getItem("token"),
         meeting_code: meetingCode,
       });
       return request;
-    } catch (e) {
-      throw e;
+    } catch (err) {
+      console.error("Add history failed:", err.response?.data || err.message);
+      throw err;
     }
   };
 
