@@ -3,6 +3,8 @@ import httpStatus from "http-status";
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const API_BASE = import.meta.env.VITE_SERVER_URL;
+
 const server_url = import.meta.env.VITE_SERVER_URL;
 
 export const AuthContext = createContext({});
@@ -14,12 +16,13 @@ export const AuthProvider = ({ children }) => {
 
   // ✅ define axios client
   const client = axios.create({
-    baseURL: server_url,
-  });
+  baseURL: import.meta.env.VITE_SERVER_URL,
+});
+
 
   const handleRegister = async (name, username, password) => {
     try {
-      let request = await client.post("/api/v1/users/register", {
+      let request = await client.post("/register", {
         name,
         username,
         password,
@@ -35,7 +38,7 @@ export const AuthProvider = ({ children }) => {
 
   const handleLogin = async (username, password) => {
     try {
-      let request = await client.post("/api/v1/users/login", {
+      let request = await client.post("/login", {
         username,
         password,
       });
