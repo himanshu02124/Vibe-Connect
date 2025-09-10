@@ -10,11 +10,10 @@ export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(authContext);
   const router = useNavigate();
 
-  // ✅ axios client (baseURL already includes /api/v1/users in .env)
-  const client = axios.create({
-    baseURL: import.meta.env.VITE_SERVER_URL, // e.g. https://vibeconnectbackend-oxza.onrender.com/api/v1/users
-  });
-
+ const client = axios.create({
+  baseURL: import.meta.env.VITE_SERVER_URL + "/api/v1/users",
+  withCredentials: true,
+});
   const handleRegister = async (name, username, password) => {
     try {
       let request = await client.post("/register", { name, username, password });
