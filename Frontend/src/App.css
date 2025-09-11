@@ -5,15 +5,17 @@
   background-repeat: no-repeat;
   background-size: cover;
   color: white;
+  display: flex;
+  flex-direction: column;
 }
 
+/* --- NAVBAR --- */
 .landingPageContainer nav {
   padding-inline: 1.2rem;
   padding-block: 1.6rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-
 }
 
 .landingPageContainer nav h2 {
@@ -25,9 +27,43 @@
   display: flex;
   gap: 1.6rem;
   cursor: pointer;
-
 }
 
+/* --- HAMBURGER MENU --- */
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: white;
+  user-select: none;
+}
+
+/* Dropdown that appears on mobile */
+.mobileMenu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 70px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.9);
+  padding: 1rem;
+  border-radius: 10px;
+  gap: 1rem;
+  z-index: 1000;
+}
+
+.mobileMenu p {
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin: 0;
+}
+
+.mobileMenu p:hover {
+  text-decoration: underline;
+}
+
+/* --- MAIN SECTION --- */
 .landingMainContainer {
   display: flex;
   justify-content: space-between;
@@ -36,37 +72,40 @@
   align-items: center;
 }
 
-.landingMainContainer>div:nth-child(1) {
+.landingMainContainer > div:nth-child(1) {
   font-size: 2.2rem;
+  max-width: 50%;
 }
 
-.landingMainContainer>div:nth-child(1) div[role='button'] {
-  background: #D97500;
+.landingMainContainer > div:nth-child(1) div[role="button"] {
+  background: #d97500;
   width: fit-content;
   padding: 1rem;
   border-radius: 20px;
   margin-top: 1.9rem;
+  cursor: pointer;
 }
 
-.landingMainContainer>div:nth-child(1) div[role='button'] a {
+.landingMainContainer > div:nth-child(1) div[role="button"] a {
   text-decoration: none;
   color: white;
   font-size: 1.7rem;
 }
 
-.landingMainContainer>div:nth-child(2) img {
+.landingMainContainer > div:nth-child(2) img {
   height: 70vh;
   width: auto;
 }
 
+/* --- EXTRA PANELS --- */
 .navBar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-inline: 20px;
   text-align: center;
-
 }
+
 .meetContainer {
   display: flex;
   padding-inline: 20px;
@@ -75,13 +114,10 @@
   justify-content: center;
 }
 
-
-
 .leftPanel {
   height: 100%;
   display: flex;
   align-items: center;
-
 }
 
 .rightPanel {
@@ -93,4 +129,47 @@
   width: 30vw;
   height: auto;
   border-radius: 20px;
+}
+
+/* --- MOBILE RESPONSIVE --- */
+@media (max-width: 768px) {
+  .landingPageContainer nav .navlist {
+    display: none; /* hide desktop nav */
+  }
+
+  .hamburger {
+    display: block; /* show ☰ on mobile */
+  }
+
+  .landingMainContainer {
+    flex-direction: column;
+    text-align: center;
+    padding-inline: 1rem;
+  }
+
+  .landingMainContainer > div:nth-child(1) {
+    font-size: 1.6rem;
+    max-width: 100%;
+  }
+
+  .landingMainContainer > div:nth-child(1) div[role="button"] {
+    margin: 1.5rem auto 0;
+    font-size: 1.2rem;
+  }
+
+  .landingMainContainer > div:nth-child(2) img {
+    height: 40vh;
+    margin-top: 1.5rem;
+  }
+
+  .rightPanel > img {
+    width: 80vw;
+  }
+
+  .meetContainer {
+    flex-direction: column;
+    gap: 5vh;
+    height: auto;
+    padding-block: 20px;
+  }
 }
